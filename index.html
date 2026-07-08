@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TestHub — Enterprise Test Platform</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ==================== SIDEBAR ==================== -->
+<aside class="sidebar">
+  <div class="sidebar-brand" id="sidebarBrand">
+    <div class="logo-dot">T</div> TestHub
+  </div>
+  <nav class="sidebar-nav" id="sidebarNav"></nav>
+  <div class="sidebar-footer" id="sidebarFooter"></div>
+</aside>
+
+<!-- ==================== TOPBAR ==================== -->
+<header class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-title" id="topbarTitle">TestHub</div>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-user" id="topbarUser"></div>
+  </div>
+</header>
+
+<!-- ==================== MAIN CONTENT ==================== -->
+<main class="main">
+
+<!-- ==================== ROLE SELECT ==================== -->
+<div class="screen active" id="role-select">
+  <div style="max-width:500px;margin:80px auto 0;text-align:center;">
+    <div style="width:72px;height:72px;border-radius:16px;background:var(--signal);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;color:#fff;margin:0 auto 16px;">T</div>
+    <h1 style="font-family:var(--font-display);font-size:32px;font-weight:700;letter-spacing:-0.5px;">TestHub</h1>
+    <p style="color:var(--slate);margin:8px 0 32px;font-size:16px;">Enterprise Test &amp; Assessment Platform</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <div class="card" style="width:220px;cursor:pointer;text-align:center;padding:32px;" onclick="showScreen('employee-login')">
+        <div style="font-size:40px;margin-bottom:12px;">👤</div>
+        <h3 style="font-family:var(--font-display);font-weight:600;">I'm an Employee</h3>
+        <p style="font-size:13px;color:var(--slate);margin-top:4px;">Take tests and track your progress</p>
+      </div>
+      <div class="card" style="width:220px;cursor:pointer;text-align:center;padding:32px;" onclick="showScreen('admin-login')">
+        <div style="font-size:40px;margin-bottom:12px;">🔐</div>
+        <h3 style="font-family:var(--font-display);font-weight:600;">I'm an Admin</h3>
+        <p style="font-size:13px;color:var(--slate);margin-top:4px;">Manage tests, questions, and results</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== EMPLOYEE LOGIN ==================== -->
+<div class="screen" id="employee-login">
+  <div style="max-width:420px;margin:60px auto;">
+    <div class="card">
+      <h2 style="font-family:var(--font-display);font-weight:600;margin-bottom:20px;">Employee Login</h2>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input class="form-input" id="empName" placeholder="e.g. John Doe" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input class="form-input" id="empEmail" type="email" placeholder="e.g. john@company.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label>Department (optional)</label>
+        <input class="form-input" id="empDept" placeholder="e.g. Engineering">
+      </div>
+      <button class="btn btn-primary" style="width:100%;" onclick="employeeLogin()">Sign In</button>
+      <p style="text-align:center;margin-top:12px;"><a href="#" onclick="showScreen('role-select')">← Back</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== EMPLOYEE DASHBOARD ==================== -->
+<div class="screen" id="employee-dashboard">
+  <h2 style="font-family:var(--font-display);font-weight:600;margin-bottom:16px;">My Dashboard</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-ring" id="empBestRing"></div>
+      <div class="kpi-info">
+        <h3 id="empBestVal">0</h3>
+        <p>Best Score</p>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-info">
+        <h3 id="empTestsTaken">0</h3>
+        <p>Tests Taken</p>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-info">
+        <h3 id="empPassRate">-</h3>
+        <p>Pass Rate</p>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-info">
+        <h3 id="empAvgScore">-</h3>
+        <p>Avg Score</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-weight:600;margin-bottom:12px;">Available Tests</h3>
+  <div class="test-grid" id="empTestGrid"></div>
+</div>
+
+<!-- ==================== QUIZ SCREEN ==================== -->
+<div class="screen" id="quiz-screen">
+  <div style="max-width:720px;margin:0 auto;">
+    <div class="quiz-header">
+      <div class="quiz-progress-text" id="qProgress">0 / 0</div>
+      <div class="quiz-timer" id="qTimer">00:00</div>
+    </div>
+    <div class="timer-bar-wrap">
+      <div class="timer-bar-fill" id="timerBarFill" style="width:100%;background:var(--verdant);"></div>
+    </div>
+    <div class="progress-bar-wrap" style="margin-bottom:16px;">
+      <div class="progress-bar-fill" id="qProgressFill" style="width:0%;"></div>
+    </div>
+
+    <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:16px;" id="qPills"></div>
+
+    <div class="card question-card">
+      <div class="question-number" id="qNumber">Question 1</div>
+      <div class="question-text" id="qText"></div>
+      <div class="question-category" id="qCategory"></div>
+    </div>
+
+    <div class="option-list" id="qOptions"></div>
+
+    <div class="quiz-actions">
+      <button class="btn btn-secondary hidden" id="qPrevBtn" onclick="prevQuestion()">← Previous</button>
+      <button class="btn btn-primary" id="qNextBtn" onclick="nextQuestion()">Next →</button>
+      <button class="btn btn-success hidden" id="qSubmitBtn" onclick="submitQuiz()">Submit Test</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== RESULTS SCREEN ==================== -->
+<div class="screen" id="results-screen">
+  <div style="max-width:720px;margin:0 auto;">
+    <div class="result-hero">
+      <div class="result-ring" id="resultRing"></div>
+      <div class="result-banner" id="resultBanner">Complete!</div>
+      <div class="result-sub" id="resultSub"></div>
+    </div>
+
+    <div class="result-stats-grid">
+      <div class="result-stat">
+        <div class="result-stat-val" id="rScore">0/0</div>
+        <div class="result-stat-lbl">Score</div>
+      </div>
+      <div class="result-stat">
+        <div class="result-stat-val" id="rTime">0m</div>
+        <div class="result-stat-lbl">Time</div>
+      </div>
+      <div class="result-stat">
+        <div class="result-stat-val" id="rAccuracy">0%</div>
+        <div class="result-stat-lbl">Accuracy</div>
+      </div>
+      <div class="result-stat">
+        <div class="result-stat-val" id="rStatus">-</div>
+        <div class="result-stat-lbl">Status</div>
+      </div>
+    </div>
+
+    <div class="card cat-breakdown" id="catBreakdown" style="margin-bottom:16px;"></div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <h3 style="font-family:var(--font-display);font-weight:600;margin-bottom:12px;">Answer Review</h3>
+      <div class="review-list" id="reviewList"></div>
+    </div>
+
+    <div class="flex items-center justify-between gap-12" style="flex-wrap:wrap;justify-content:center;" id="resultBackContainer">
+      <button class="btn btn-primary" onclick="renderEmployeeDashboard(); showScreen('employee-dashboard');">Back to Dashboard</button>
+      <button class="btn btn-outline" onclick="retryMissed()">Retry Missed</button>
+      <button class="btn btn-secondary" onclick="showCertificate()">View Certificate</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== CERTIFICATE SCREEN ==================== -->
+<div class="screen" id="certificate-screen">
+  <div class="certificate">
+    <h1 id="certOrg">Organization</h1>
+    <div class="cert-line"></div>
+    <p>This certifies that</p>
+    <h2 style="font-family:var(--font-display);font-size:24px;font-weight:700;margin:12px 0;" id="certName">Name</h2>
+    <p>has successfully completed</p>
+    <h3 style="font-family:var(--font-display);font-size:20px;font-weight:600;margin:8px 0;" id="certTest">Test Title</h3>
+    <div class="cert-score" id="certScore">0%</div>
+    <p>Result: <strong id="certResult">PASSED</strong></p>
+    <div class="cert-line"></div>
+    <div class="cert-footer">
+      <p>Department: <span id="certDept">Employee</span></p>
+      <p>Date: <span id="certDate"></span></p>
+    </div>
+  </div>
+  <div class="flex items-center justify-center gap-12 mt-20 no-print">
+    <button class="btn btn-primary" onclick="printCertificate()">Print Certificate</button>
+    <button class="btn btn-secondary" onclick="renderEmployeeDashboard(); showScreen('employee-dashboard');">Back to Dashboard</button>
+  </div>
+</div>
+
+<!-- ==================== MY HISTORY ==================== -->
+<div class="screen" id="my-history">
+  <h2 style="font-family:var(--font-display);font-weight:600;margin-bottom:16px;">My History</h2>
+
+  <div class="kpi-grid" style="margin-bottom:16px;">
+    <div class="kpi-card">
+      <div class="kpi-info">
+        <h3 id="historyAvg">-</h3>
+        <p>Average Score</p>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-info">
+        <h3 id="historyBest">-</h3>
+        <p>Best Score</p>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-info">
+        <h3 id="historyWorst">-</h3>
+        <p>Lowest Score</p>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-info">
+        <h3 id="historyTotal">0</h3>
+        <p>Total Tests</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px;">
+    <h4 style="font-family:var(--font-display);font-weight:600;margin-bottom:8px;">Score Trend</h4>
+    <div id="historySparkline" style="padding:8px 0;"></div>
+  </div>
+
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Test</th><th>Date</th><th>Score</th><th>Percentage</th><th>Status</th></tr>
+        </thead>
+        <tbody id="historyTableBody">
+          <tr><td colspan="5" class="table-empty">No attempts yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ADMIN LOGIN ==================== -->
+<div class="screen" id="admin-login">
+  <div style="max-width:400px;margin:60px auto;">
+    <div class="card">
+      <h2 style="font-family:var(--font-display);font-weight:600;margin-bottom:20px;">Admin Login</h2>
+      <div class="form-group">
+        <label>Password</label>
+        <input class="form-input" id="adminPass" type="password" placeholder="Enter admin password">
+      </div>
+      <button class="btn btn-primary" style="width:100%;" onclick="adminLogin()">Sign In</button>
+      <p style="text-align:center;margin-top:12px;"><a href="#" onclick="showScreen('role-select')">← Back</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ADMIN DASHBOARD ==================== -->
+<div class="screen" id="admin-dashboard">
+  <h2 style="font-family:var(--font-display);font-weight:600;margin-bottom:16px;">Admin Dashboard</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-ring" id="kpiEmployees"></div>
+      <div class="kpi-info">
+        <h3 id="kpiEmpVal">0</h3>
+        <p>Employees</p>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-ring" id="kpiTests"></div>
+      <div class="kpi-info">
+        <h3 id="kpiTestVal">0</h3>
+        <p>Tests</p>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-ring" id="kpiAttempts"></div>
+      <div class="kpi-info">
+        <h3 id="kpiAttemptVal">0</h3>
+        <p>Attempts</p>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-ring" id="kpiPassRate"></div>
+      <div class="kpi-info">
+        <h3 id="kpiPassVal">0%</h3>
+        <p>Pass Rate</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px;" id="adminChartContainer"></div>
+
+  <div class="card">
+    <h3 style="font-family:var(--font-display);font-weight:600;margin-bottom:12px;">Recent Attempts</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Employee</th><th>Test</th><th>Score</th><th>%</th><th>Status</th></tr>
+        </thead>
+        <tbody id="adminRecentTable">
+          <tr><td colspan="5" class="table-empty">No attempts yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ADMIN TESTS ==================== -->
+<div class="screen" id="admin-tests">
+  <div class="flex items-center justify-between gap-12" style="margin-bottom:16px;">
+    <h2 style="font-family:var(--font-display);font-weight:600;">Manage Tests</h2>
+    <button class="btn btn-primary" onclick="showCreateTestModal()">+ Create Test</button>
+  </div>
+  <div id="adminTestBanner"></div>
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Title</th><th>Bank</th><th>Questions</th><th>Time</th><th>Pass %</th><th>Attempts</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="adminTestList">
+          <tr><td colspan="7" class="table-empty">No tests yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ADMIN QUESTIONS ==================== -->
+<div class="screen" id="admin-questions">
+  <div class="flex items-center justify-between gap-12" style="margin-bottom:16px;">
+    <h2 style="font-family:var(--font-display);font-weight:600;">Question Banks</h2>
+    <div class="flex items-center gap-12">
+      <button class="btn btn-secondary" onclick="showCreateBankModal()">+ New Bank</button>
+      <button class="btn btn-primary" onclick="importBankFile()">Import JSON</button>
+      <input type="file" id="bankFileInput" accept=".json" style="display:none" onchange="handleBankImport(event)">
+    </div>
+  </div>
+
+  <div id="bankListContainer" style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px;"></div>
+
+  <div class="card">
+    <div style="margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+      <div>
+        <h3 style="font-family:var(--font-display);font-weight:600;display:inline;">Questions</h3>
+        <select id="adminQBankFilter" class="form-select" style="width:auto;margin-left:12px;" onchange="renderAdminQuestions()">
+          <option value="">All Banks</option>
+        </select>
+      </div>
+      <button class="btn btn-sm btn-primary" onclick="showAddQuestionModal()">+ Add Question</button>
+    </div>
+    <div class="table-wrap" style="max-height:500px;overflow-y:auto;">
+      <table>
+        <thead>
+          <tr><th></th><th>Question</th><th>Category</th><th>Bank</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="adminQuestionList">
+          <tr><td colspan="5" class="table-empty">Loading questions...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ADMIN RESULTS ==================== -->
+<div class="screen" id="admin-results">
+  <div class="flex items-center justify-between gap-12" style="margin-bottom:16px;">
+    <h2 style="font-family:var(--font-display);font-weight:600;">Test Results</h2>
+    <div class="flex items-center gap-12">
+      <select class="form-select" id="adminResultTestFilter" onchange="filterAdminResults()" style="width:auto;">
+        <option value="">All Tests</option>
+      </select>
+      <button class="btn btn-secondary" onclick="exportCSV()">Export CSV</button>
+    </div>
+  </div>
+  <p class="text-sm text-muted" style="margin-bottom:12px;" id="adminResultCount">0 attempt(s)</p>
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Test</th><th>Date</th><th>Score</th><th>%</th><th>Time</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody id="adminResultTableBody">
+          <tr><td colspan="8" class="table-empty">No results yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ADMIN USERS ==================== -->
+<div class="screen" id="admin-users">
+  <h2 style="font-family:var(--font-display);font-weight:600;margin-bottom:16px;">Employees</h2>
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Email</th><th>Department</th><th>Tests</th><th>Avg %</th><th>Best %</th><th>Joined</th></tr>
+        </thead>
+        <tbody id="adminUserTableBody">
+          <tr><td colspan="7" class="table-empty">No employees registered yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ADMIN SETTINGS ==================== -->
+<div class="screen" id="admin-settings">
+  <h2 style="font-family:var(--font-display);font-weight:600;margin-bottom:16px;">Settings</h2>
+  <div class="card" style="max-width:500px;">
+    <div class="form-group">
+      <label>Organization Name</label>
+      <input class="form-input" id="settingsOrgName" placeholder="My Organization">
+    </div>
+    <div class="form-group">
+      <label>New Admin Password (leave blank to keep current)</label>
+      <input class="form-input" id="settingsNewPass" type="password" placeholder="New password">
+    </div>
+    <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:24px 0;">
+    <h4 style="font-family:var(--font-display);font-weight:600;color:var(--crimson);margin-bottom:8px;">Danger Zone</h4>
+    <p class="text-sm text-muted" style="margin-bottom:12px;">This will permanently delete all data including tests, employees, and results.</p>
+    <button class="btn btn-danger" onclick="resetAppData()">Reset All Data</button>
+  </div>
+</div>
+
+</main>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script src="js/db.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "id": "workplace",
+  "title": "Workplace Essentials",
+  "description": "Communication, aptitude, logic, and business ethics",
+  "icon": "💼",
+  "questions": [
+    {"id": "wp-001", "category": "Communication", "q": "Which is a formal greeting?", "o": ["Dear Sir","Hey","Yo","What's up"], "a": 0},
+    {"id": "wp-002", "category": "Communication", "q": "Which closes a formal email?", "o": ["Best regards","Cheers","Talk later","Bye"], "a": 0},
+    {"id": "wp-003", "category": "Communication", "q": "What does CC mean?", "o": ["Carbon Copy","Copy Center","Closed Circuit","Credit Check"], "a": 0},
+    {"id": "wp-004", "category": "Communication", "q": "What does BCC mean?", "o": ["Blind Carbon Copy","Better Copy","Backup Copy","Blank Copy"], "a": 0},
+    {"id": "wp-005", "category": "Communication", "q": "Which is active voice?", "o": ["He wrote report","Report was written","Report is written","Writing report"], "a": 0},
+    {"id": "wp-006", "category": "Communication", "q": "Which is passive voice?", "o": ["The report was written","He wrote report","She writes report","They wrote report"], "a": 0},
+    {"id": "wp-007", "category": "Communication", "q": "What is a stakeholder?", "o": ["Interested party","Shareholder only","Employee only","Customer only"], "a": 0},
+    {"id": "wp-008", "category": "Logical Reasoning", "q": "All A are B. All B are C. Therefore?", "o": ["All A are C","All C are A","Some A are not C","None"], "a": 0},
+    {"id": "wp-009", "category": "Logical Reasoning", "q": "If it rains, ground is wet. Ground is wet. Therefore?", "o": ["May have rained","It rained","Not rain","None"], "a": 0},
+    {"id": "wp-010", "category": "Logical Reasoning", "q": "Which completes: 2, 4, 6, 8, ?", "o": ["10","9","12","16"], "a": 0},
+    {"id": "wp-011", "category": "Logical Reasoning", "q": "Which completes: 1, 4, 9, 16, ?", "o": ["25","20","24","36"], "a": 0},
+    {"id": "wp-012", "category": "Logical Reasoning", "q": "Which is not a prime?", "o": ["2","3","5","9"], "a": 3},
+    {"id": "wp-013", "category": "Logical Reasoning", "q": "Clock shows 3:15. Angle between hands?", "o": ["7.5 deg","0 deg","15 deg","30 deg"], "a": 0},
+    {"id": "wp-014", "category": "Logical Reasoning", "q": "If today is Tuesday, day after tomorrow?", "o": ["Thursday","Wednesday","Friday","Monday"], "a": 0},
+    {"id": "wp-015", "category": "Business Ethics", "q": "What is conflict of interest?", "o": ["Personal gain vs duty","Team conflict","Budget issue","Time conflict"], "a": 0},
+    {"id": "wp-016", "category": "Business Ethics", "q": "What is confidentiality?", "o": ["Keeping info private","Sharing broadly","Public data","Social media"], "a": 0},
+    {"id": "wp-017", "category": "Business Ethics", "q": "What is insider trading?", "o": ["Trading on non-public info","Trading stocks","Day trading","Investing"], "a": 0},
+    {"id": "wp-018", "category": "Business Ethics", "q": "Which is bribery?", "o": ["Offering money for favor","Giving gift","Networking","Sponsorship"], "a": 0},
+    {"id": "wp-019", "category": "Business Ethics", "q": "What is ESG?", "o": ["Environmental Social Governance","Extra Special Guarantee","Employee Salary Grid","Enterprise Software Group"], "a": 0},
+    {"id": "wp-020", "category": "Business Ethics", "q": "What is the purpose of a code of conduct?", "o": ["Guide ethical behavior","Increase sales","Marketing","HR policy"], "a": 0},
+    {"id": "wp-021", "category": "Business Ethics", "q": "What is a whistleblower?", "o": ["Reports wrongdoing","Plays whistle","Auditor","Manager"], "a": 0}
+  ]
+}
